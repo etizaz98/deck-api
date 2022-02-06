@@ -1,11 +1,6 @@
 ## For developers
 ### Installation
 
-For setting up the postgres you have installed postgres and then use run the docker compose file for postgres
-
-```
-docker-compose -f postgres-compose.yml up -d
-```
 
 All microservice basic dependencies are listed in the package.json file, hence there is no need to install any global packages. Simply run npm install.
 
@@ -46,7 +41,7 @@ Before deploying, the following prerequisites need to met:
 1. clone solution
     To install the solution, first clone the repo to the host server
     ```
-    git clone https://github.com/democy/deck-microservice.git
+    git clone https://github.com/etizaz98/deck-api
     ```
     In some cases, you may need to activate your ssh-agent to link your local private key to the command in the following manner:
     ```
@@ -54,19 +49,10 @@ Before deploying, the following prerequisites need to met:
     ```
 
 2. build docker container
-    move to cloned folder.
-    ```
-    cd deck-api
-    ```
-    sudo docker build -t ms:deck-api .
-    ```
-3. run the container
-    run the container using the `--network` flag, linking the container to the `bridge network` you created on server.
-    ```
-    sudo docker run --network 'mynetwork' -p <hostport>:<containerport> -d --name deck-api --restart always ms:deck-api
-    ```
-4. test server
-    open http://localhost:port/api/v1 in your browser.
+   simply run
+   ```
+   sudo docker-compose up -d
+   ```
 
 ### Technical users
 
