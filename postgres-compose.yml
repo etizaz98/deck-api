@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+
+  katana-postgres:
+    image: postgres
+    container_name: katana-postgres
+    build: .
+    ports:
+      - "5432:5432"
+    volumes:
+      - /var/lib/postgres-data-1:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=katana
+      - POSTGRES_PASSWORD=katana
+      - POSTGRES_DB=katana
+    networks:
+      - bridge
+
+networks:
+  bridge:
+    driver: bridge
