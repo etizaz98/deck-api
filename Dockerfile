@@ -33,7 +33,7 @@ ADD ./tsconfig.json /app
 # build solution
 RUN npm run build
 
-COPY ./src/views ./build/views
+
 COPY ./src/public ./build/public
 
 # setup environment variables

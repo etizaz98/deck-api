@@ -5,15 +5,29 @@ services:
   katana-postgres:
     image: postgres
     container_name: katana-postgres
-    build: .
     ports:
-      - "5432:5432"
+      - "5428:5432"
     volumes:
       - /var/lib/postgres-data-1:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=katana
       - POSTGRES_PASSWORD=katana
       - POSTGRES_DB=katana
+    networks:
+      - bridge
+
+
+  deck:
+    build: .
+    container_name: deck
+    ports:
+      - "3008:80"
+    environment:
+      - PG_USER=katana
+      - PG_PASSWORD=katana
+      - PG_DB=katana
+      - PG_HOST=katana-postgres
+      - PG_PORT=5432
     networks:
       - bridge
 
