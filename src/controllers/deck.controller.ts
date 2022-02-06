@@ -1,24 +1,16 @@
 import { Response, Request, NextFunction } from 'express';
 
-import { log } from '../log';
-
-export async function getDeck(_req: Request, res: Response, _next: NextFunction) {
+import { createCards } from '../services'
+export async function createDeck(_req: Request, res: Response, _next: NextFunction) {
     try {
-
-            res.json({});
-        
-    } catch (err) {
-        log.error({
-            message: "Error in getting user profile!",
-            statusCode: 500,
-            detail: "Error in getting user!",
-            repo: "deck-api",
-            path: "/api/v1/deck",
-        });
-        res.status(500).json({
-            data: null,
-            error: (err as any).response.data,
-            message: "Error in getting user profile!",
-        });
+        const deckdata = await createCards();
+        res.status(201).json({ data: deckdata, error: null, message: 'cards has been created successfully!' });
+    } catch (err: any) {
+        console.log(`err.code`);
+        if ((err as any).code && (err as any).code === '23505') {
+            res.status(409).json({ data: null, error: err.stack, message: "card already exist (cards must be unique)" });
+        }  else {
+            res.status(500).json({ data: null, error: err.stack, message: 'Error in creating a cards!' });
+        }
     }
 }

@@ -48,8 +48,8 @@
         ,"skipLibCheck": true
 
         /* Experimental Options */
-        ,"experimentalDecorators": false                    /* Enables experimental support for ES7 decorators. */
-        ,"emitDecoratorMetadata": false                     /* Enables experimental support for emitting type metadata for decorators. */
+        ,"experimentalDecorators": true                    /* Enables experimental support for ES7 decorators. */
+        ,"emitDecoratorMetadata": true                     /* Enables experimental support for emitting type metadata for decorators. */                 /* Enables experimental support for emitting type metadata for decorators. */
         ,"pretty" : true                                    /* Stylize errors and messages using color and context.*/
 
         }
