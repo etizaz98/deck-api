@@ -12,7 +12,7 @@ const config: any = {
     password: PG_PASSWORD,
     database: PG_DATABASE,
     entities: [
-        './**/*.entity{.ts,.js}',
+        '../config/entity/*.entity{.ts,.js}',
     ],
     synchronize: true
 }
