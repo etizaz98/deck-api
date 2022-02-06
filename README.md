@@ -24,7 +24,11 @@ npm start
 ### Run tests
 
 Test cases be written and then added to the ./test/index.ts file for compilation.
-You are also able to add tests to the
+tests can be run using this command
+
+```
+npm run tests
+```
 
 ### Deployment
 
