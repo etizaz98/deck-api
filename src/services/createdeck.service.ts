@@ -1,30 +1,55 @@
-import { Cards, connection } from '../config'
+import { Cards,Deck,DeckToCards, connection } from '../config'
+import {log} from '../log'
 
-export const createCards = async () => {
+export const createDeck = async (data: any) => {
+    const { type, shuffled } = data
+    // const CardsRepository = connection.getRepository(Cards);
     try {
-        const suits = ["SPADES", "DAIMONDS", "CLUBS", "HEARTS"];
-        const values = ["ACE", "2", "3", "4", "5", "6", "7", "8", "9", "10", "JACK", "QUEEN", "KING"];
-        const CardsData: any[] = []
-        for (const suit of suits) {
-            for (const value of values) {
-                const cardData:any = {
-                    value,
-                    suit,
-                    code: `${value[0]}${suit[0]}`
+        const deck: any = {
+            type,
+            shuffled
+        }
+        const remaining: number = type === 'FULL' ? 52 : 36
+        const { raw } = await connection
+            .createQueryBuilder()
+            .insert()
+            .into(Deck)
+            .values(deck)
+            .execute();
 
-                }
-                CardsData.push(cardData)
+
+        const CardsData: any[] = await connection.getRepository(Cards).find({ take :remaining})
+
+        if (shuffled) {
+
+            for (let i = 0; i < 500; i++) {
+                let location1 = Math.floor((Math.random() * CardsData.length));
+                let location2 = Math.floor((Math.random() * CardsData.length));
+                let tmp = CardsData[location1];
+
+                CardsData[location1] = CardsData[location2];
+                CardsData[location2] = tmp;
             }
         }
+
+        const cardsToDeck:any[] = CardsData.map((card: any, i: number) => ({ deckId: (raw[0].id as any), cardId: (card as any).id, deckposition: i + 1, seen: false }))
+
+        // const { raw: inserted } = 
         await connection
             .createQueryBuilder()
             .insert()
-            .into(Cards)
-            .values(CardsData)
+            .into(DeckToCards)
+            .values(cardsToDeck)
             .execute();
-        return CardsData;
-    } catch (err: any) {
-        // log.error('Error in creating a new Cards:', err.stack,err.code );
+        return {
+                "deckId": raw[0].id,
+                type,
+                shuffled,
+                remaining
+            // raw[0]
+        };
+    } catch (err) {
+        log.error('Error in creating a new Cards:', (err as any).stack);
         throw err;
     }
 }
