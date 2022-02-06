@@ -1,11 +1,12 @@
 import { Cards,Deck,DeckToCards, connection } from '../config'
+import {CreateQuery, CardsData} from '../interfaces'
 import {log} from '../log'
 
 export const createDeck = async (data: any) => {
     const { type, shuffled } = data
     // const CardsRepository = connection.getRepository(Cards);
     try {
-        const deck: any = {
+        const deck: CreateQuery = {
             type,
             shuffled
         }
@@ -18,7 +19,7 @@ export const createDeck = async (data: any) => {
             .execute();
 
 
-        const CardsData: any[] = await connection.getRepository(Cards).find({ take :remaining})
+        const CardsData: CardsData[] = await connection.getRepository(Cards).find({ take :remaining})
 
         if (shuffled) {
 

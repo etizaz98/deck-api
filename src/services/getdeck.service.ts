@@ -1,5 +1,5 @@
 import { DeckToCards ,connection } from '../config'
-
+import { CardsData} from '../interfaces'
 import { log } from '../log';
 
 export const getDeck = async (data: any) => {
@@ -9,7 +9,7 @@ export const getDeck = async (data: any) => {
     
     // const CardsRepository = connection.getRepository(Cards);
     try {				
-            const CardsData: any[] = await connection.getRepository(DeckToCards).
+            const CardsData: CardsData[] = await connection.getRepository(DeckToCards).
             query(`with data as (  
                 select c.* from deck_to_cards as dc 
                 inner join cards as c on dc."cardId" = c.id 
