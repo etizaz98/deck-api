@@ -4,7 +4,7 @@ import * as deckController from '../controllers';
 
 export const deckRouter = Router();
 
-deckRouter.post('/createcards', deckController.createDeckController);
+deckRouter.post('/createcards', deckController.createCardsController);
 
 
 deckRouter.post('/', deckController.createDeckController);
